@@ -5,8 +5,8 @@ class Settings(BaseSettings):
     app_name: str = "SmartDispatch AI"
     environment: str = "development"
     debug: bool = False
+    database_url: str
 
     model_config = SettingsConfigDict(env_file=".env")
-
 
 settings = Settings()
