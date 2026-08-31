@@ -20,9 +20,12 @@ class Job(Base):
     __tablename__ = "jobs"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    status: Mapped[JobStatus] = mapped_column( SQLAlchemyEnum(JobStatus, values_callable=lambda enum_cls: [e.value for e in enum_cls]),default=JobStatus.PENDING)
-    pickup_address: Mapped[str] = mapped_column(String(255))
-    dropoff_address: Mapped[str] = mapped_column(String(255))
+    status: Mapped[JobStatus] = mapped_column(
+        SQLAlchemyEnum(JobStatus, values_callable=lambda enum_cls: [e.value for e in enum_cls]),
+        default=JobStatus.PENDING,
+    )
+    site_address: Mapped[str] = mapped_column(String(255))
+    description: Mapped[str] = mapped_column(String(1000))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()

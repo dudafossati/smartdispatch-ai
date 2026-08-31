@@ -6,15 +6,15 @@ from app.models.job import JobStatus
 
 
 class JobCreate(BaseModel):
-    pickup_address: str
-    dropoff_address: str
+    site_address: str
+    description: str
 
 
 class JobRead(BaseModel):
     id: int
     status: JobStatus
-    pickup_address: str
-    dropoff_address: str
+    site_address: str
+    description: str
     created_at: datetime
     updated_at: datetime
 
