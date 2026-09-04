@@ -19,3 +19,15 @@ async def create_job(db: AsyncSession, job_data: JobCreate) -> Job:
 async def list_jobs(db: AsyncSession) -> list[Job]:
     result = await db.execute(select(Job))
     return list(result.scalars().all())
+
+
+async def get_job(db: AsyncSession, job_id: int) -> Job | None:
+    result = await db.execute(select(Job).where(Job.id == job_id))
+    return result.scalar_one_or_none()
+
+
+
+
+
+
+        
