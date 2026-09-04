@@ -9,6 +9,8 @@ async def create_job(db: AsyncSession, job_data: JobCreate) -> Job:
     new_job = Job(
         site_address=job_data.site_address,
         description=job_data.description,
+        latitude=job_data.latitude,
+        longitude=job_data.longitude,
     )
     db.add(new_job)
     await db.commit()
@@ -24,10 +26,3 @@ async def list_jobs(db: AsyncSession) -> list[Job]:
 async def get_job(db: AsyncSession, job_id: int) -> Job | None:
     result = await db.execute(select(Job).where(Job.id == job_id))
     return result.scalar_one_or_none()
-
-
-
-
-
-
-        

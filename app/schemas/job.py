@@ -8,6 +8,8 @@ from app.models.job import JobStatus
 class JobCreate(BaseModel):
     site_address: str
     description: str
+    latitude: float
+    longitude: float
 
 
 class JobRead(BaseModel):
@@ -15,6 +17,9 @@ class JobRead(BaseModel):
     status: JobStatus
     site_address: str
     description: str
+    latitude: float
+    longitude: float
+    technician_id: int | None
     created_at: datetime
     updated_at: datetime
 

@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
 from app.schemas.job import JobCreate, JobRead
 from app.services.job_service import create_job, list_jobs, get_job
+from app.services.matching_service import auto_assign_job
 
 router = APIRouter()
 
@@ -26,3 +27,14 @@ async def get_job_endpoint(job_id: int, db: AsyncSession = Depends(get_db)):
     return job
 
 
+@router.post("/jobs/{job_id}/assign", response_model=JobRead)
+async def assign_job_endpoint(job_id: int, db: AsyncSession = Depends(get_db)):
+    job = await get_job(db, job_id)
+    if job is None:
+        raise HTTPException(status_code=404, detail="Job not found")
+
+    assigned_job = await auto_assign_job(db, job)
+    if assigned_job is None:
+        raise HTTPException(status_code=409, detail="No available technician found")
+
+    return assigned_job
